@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="icon" type="image/png" href="favicon.png" />
+
+    {% block title %} {% endblock %}
+
+    <script src="script/jquery-3.5.1.min.js"></script>
+    <script src="script/dalma_hanja_index.js"></script>
+    <script src="script/utils.js"></script>
+
+    <link href="style/main.css?v1" rel="stylesheet" type="text/css"/>
+    <link href="style/colors.css" rel="stylesheet" type="text/css"/>
+    <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap" rel="stylesheet">
+
+  </head>
+  <body>
+    {% include "hanja_words.html" %}
+    {% block body %} {% endblock %}
+  </body>
+</html>

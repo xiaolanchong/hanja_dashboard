@@ -1,0 +1,44 @@
+
+
+body {
+    font-family: Tahoma, Verdana;
+    background-color: black;
+    color: white;
+}
+
+.hangul {
+    font-family: 'Nanum Gothic', sans-serif;
+}
+
+.hanja {
+    font-family: 'Nanum Gothic', sans-serif;
+}
+
+.hanja-board {
+    padding: 3px;
+}
+
+table .hanja-board {
+    margin: 5px;
+}
+
+/*  */
+
+.kanji_widget {
+    padding-left: 3px;
+	padding-right: 3px;
+	border: 1px solid #666666;
+	border-radius: 3px;
+	font-size: 22px;
+}
+
+.kanji_widget:hover {
+    background-color: #606060;
+	cursor: pointer;
+}
+
+.kanjipopup {
+    background-color: black !important;
+	color: white !important;
+}
+

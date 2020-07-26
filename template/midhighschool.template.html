@@ -1,0 +1,44 @@
+{% extends "base.template.html" %}
+
+{% block title %}
+    <title>Список ханча средней и старшей школ</title>
+{% endblock %}
+
+{% block body %}
+    <h1>Список ханча средней и старшей школ</h1>
+    <div>
+        대한민국 중고등학교 기초한자 목록 - список ханча (китайских иероглифов), изучаемых в <span class="level-mid-school">средней</span> и <span class="level-high-school">старшей</span> школах.
+        Начертания иероглифов даны в соответствии со стандартом Южной Кореи. Начертания на других страницах могут отличаться, см. <a href="https://en.wikipedia.org/wiki/Han_unification">унификация Хань</a>.
+    </div>
+
+        <table>
+            <thead>
+                 <tr>
+                     <th>Слог</th>
+                     <th>Иероглиф</th>
+                 </tr>
+            </thead>
+            <tbody>
+                 {% for syllable, mid_hanja, high_hanja in records %}
+                 <tr>
+                     <td class="hangul">{{ syllable }}</td>
+                     <td>
+                         {% for hanja in mid_hanja %}
+                         <span class="kanji_widget level-mid-school hanja">{{ hanja }}</span>
+                         {% endfor %}
+                         {% for hanja in high_hanja %}
+                         <span class="kanji_widget level-high-school hanja">{{ hanja }}</span>
+                         {% endfor %}
+                     </td>
+                 </tr>
+                 {% endfor %}
+            </tbody>
+        </table>
+
+    <div>Источник: <a href="https://ko.wikipedia.org/wiki/%EB%8C%80%ED%95%9C%EB%AF%BC%EA%B5%AD_%EC%A4%91%EA%B3%A0%EB%93%B1%ED%95%99%EA%B5%90_%EA%B8%B0%EC%B4%88%ED%95%9C%EC%9E%90_%EB%AA%A9%EB%A1%9D">Википедия</a>
+    </div>
+    <h3>Другие списки ханча</h3>
+    <ul>
+       <li><a href="hanja_exam.html">Список экзамен на знание ханча (전국한자능력검정시험)</a></li>
+    <ul>
+{% endblock %}

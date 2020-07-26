@@ -1,0 +1,24 @@
+{
+  "name": "hanja_dashboard",
+  "version": "1.0.0",
+  "description": "Hanja information by grade",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "hanja"
+  ],
+  "author": "Eugene Gorbachev",
+  "license": "ISC",
+  "dependencies": {},
+  "devDependencies": {
+    "eslint": "^7.5.0",
+    "eslint-config-airbnb-base": "^14.2.0",
+    "eslint-config-standard": "^14.1.1",
+    "eslint-plugin-import": "^2.22.0",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^4.0.1"
+  }
+}
