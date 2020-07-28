@@ -8,7 +8,7 @@ function onHanjaClick (self) {
     hanjaBoardElem.remove()
     return
   }
-  hanjaBoardElem = $(`<div id="${hanjaBoardId}">Загрузка...<.div>`)
+  hanjaBoardElem = $(`<div id="${hanjaBoardId}">Загрузка...</div>`)
   $(self).after(hanjaBoardElem)
   const hanjaIndex = dalmaHanjaIndex[hanja]
   if (hanjaIndex === undefined) {
