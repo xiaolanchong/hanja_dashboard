@@ -15,8 +15,16 @@ body {
     font-size: 125%;
 }
 
-.hanja-board {
+table.main_table {
+    margin: 5px 5px;
+}
+
+table.hanja-board {
     padding: 3px;
+}
+
+span.hanja_hilite {
+    color: tan;
 }
 
 table.hanja-board {

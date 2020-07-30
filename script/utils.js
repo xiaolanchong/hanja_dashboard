@@ -30,23 +30,22 @@ function onHanjaClick (self) {
       hanjaBoardElem.text('Кандзи не найден на сайте')
     }
   )
-  // const clicked_elem = $(event.target)
 }
 
 function createHanjaBoard (jsonData) {
   const hanja = jsonData?.hanja ?? ''
   const words = jsonData?.words ?? []
   const table = $(`<table class="hanja-board">` + 
-                    `<caption>Слова ${hanja}</caption>` + 
+                    `<caption>Слова с ${hanja}</caption>` + 
                     `<tr><th>Ханча</th><th>Слово</th><th>Значение</th></tr>` + 
                   `</table>`)
-  for (const [hanja, hangul, meaning] of words) {
-    const row = $(`<tr><td class="hanja">${hanja}</td><td class="hangul">${hangul}</td><td>${meaning}</td></tr>`)
+  for (const [hanjaWord, hangul, meaning] of words) {
+    const coloredHanjaWord = hanjaWord.replaceAll(hanja, `<span class="hanja_hilite">${hanja}</span>`)
+    const row = $(`<tr><td class="hanja">${coloredHanjaWord}</td><td class="hangul">${hangul}</td><td>${meaning}</td></tr>`)
     table.append(row)
   }
   return table
 }
-
 
 function articleNumberToLink (number) {
   const articlesPerDir = 100
