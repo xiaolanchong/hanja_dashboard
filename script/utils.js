@@ -40,7 +40,7 @@ function createHanjaBoard (jsonData) {
                     `<tr><th>Ханча</th><th>Слово</th><th>Значение</th></tr>` + 
                   `</table>`)
   for (const [hanjaWord, hangul, meaning] of words) {
-    const coloredHanjaWord = hanjaWord.replaceAll(hanja, `<span class="hanja_hilite">${hanja}</span>`)
+    const coloredHanjaWord = hanjaWord.replace(new RegExp(`${hanja}`, 'g'), `<span class="hanja_hilite">${hanja}</span>`)
     const row = $(`<tr><td class="hanja">${coloredHanjaWord}</td><td class="hangul">${hangul}</td><td>${meaning}</td></tr>`)
     table.append(row)
   }
