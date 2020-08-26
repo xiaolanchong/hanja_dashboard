@@ -7,12 +7,18 @@ body {
 }
 
 .hangul {
-    font-family: 'Nanum Gothic', sans-serif;
+    /*font-family: 'Nanum Gothic', sans-serif;*/
+  color: LightBlue;
 }
 
 .hanja {
-    font-family: 'Nanum Gothic', sans-serif;
+   /* font-family: 'Nanum Gothic', sans-serif;*/
     font-size: 125%;
+}
+
+.number {
+  font-size: small;
+  color: gray;
 }
 
 table.main_table {
@@ -21,6 +27,10 @@ table.main_table {
 
 table.hanja-board {
     padding: 3px;
+}
+
+table.alternative > tbody > tr:nth-child(even) {
+  background-color: #181818;
 }
 
 span.hanja_hilite {
@@ -37,6 +47,10 @@ table.hanja-board  th, caption {
 
 table.hanja-board  tr:nth-child(even) {
     background: #202020;
+}
+
+.meaning {
+  /*font-size: 75%;*/
 }
 
 /*  */

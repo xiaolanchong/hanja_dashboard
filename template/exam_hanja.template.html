@@ -1,0 +1,37 @@
+{% extends "base.template.html" %}
+
+{% block title %}
+    <title>Список экзамена на знание ханчи</title>
+{% endblock %}
+
+{% block body %}
+    <h1>Список экзамена на знание ханчи</h1>
+    <div>
+        3500 иероглифов, разбитых на уровни 8-1, от простого к сложному.
+        Начертания иероглифов даны в соответствии со стандартом Южной Кореи. Начертания на других страницах могут отличаться, см. <a href="https://en.wikipedia.org/wiki/Han_unification">унификация Хань</a>.
+    </div>
+    <table class="main_table alternative">
+        <thead>
+             <tr>
+                 <th>№</th>
+                 <th>Иероглиф</th>
+                 <th>Чтение</th>
+                 <th>Значение</th>
+             </tr>
+        </thead>
+        <tbody>
+             {%- for hanja, readings, meanings, grade in records %}
+             <tr>
+                 <td class="number">{{ loop.index }}</td>
+                 <td><span class="level-dark-{{grade}} hanja kanji_widget">{{ hanja }}</span></td>
+                 <td class="hangul reading">{{ readings }}</td>
+                 <td class="meaning">{{ meanings }}
+                 </td>
+             </tr>
+             {%- endfor %}
+        </tbody>
+    </table>
+    <div>Источник: <a href="https://namu.wiki/w/%ED%95%9C%EC%9E%90/%EB%AA%A9%EB%A1%9D/%EA%B8%89%EC%88%98%EB%B3%84">Намувики</a>
+    </div>
+
+{% endblock %}
