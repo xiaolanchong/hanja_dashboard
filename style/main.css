@@ -21,6 +21,12 @@ body {
   color: gray;
 }
 
+tr.level {
+  color: Brown;
+  font-size: 150%;
+  background: #282828;
+}
+
 table.main_table {
     margin: 5px 5px;
 }

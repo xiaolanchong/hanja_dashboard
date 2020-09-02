@@ -2,6 +2,58 @@
 import jinja2
 import os
 
+def is_hiragana(sym):
+    return 0x3040 <= ord(sym) <= 0x309f
+
+class KanjiDict:
+    def __init__(self):
+        self.meanings = {}
+        with open('kanji.dat', encoding='utf8') as f:
+            for line in f.readlines():
+                parts = line.split('|')
+                kanji, chinese, onkun, nanori, bushumei, english = parts
+                hiragana_start = next((i for i, sym in enumerate(onkun) if is_hiragana(sym)), None)
+                on = onkun[:hiragana_start] if hiragana_start is not None else onkun
+                on = on.strip()
+                #on.split(' ')
+                self.meanings[kanji] = (english, on)
+        variants = {
+            '敎': '教',
+            '靑': '青',
+            '內': '内',
+            '淸': '清',
+            '說': '説',
+            '歲': '歳',
+            '稅': '税',
+            '戶': '戸',
+            '脫': '脱',
+            '尙': '尚',
+            '悅': '悦',
+            '旣': '既',
+            '畓': '',
+            '閱': '閲',
+            '銳': '鋭',
+            '娛': '娯',
+            '毁': '毀',
+            '乭': '',
+            '卨': '',
+            '吳': '呉',
+            '嬅': '',
+            '姬': '',
+            '癎': '',
+            '媤': '',
+            '篡': '',
+        }
+        for key, value in variants.items():
+            if len(value):
+                self.meanings[key] = self.meanings[value]
+
+    def get_meaning(self, kanji):
+        meaning = self.meanings.get(kanji)
+        #if meaning is None:
+        #    print(f"'{kanji}': '', ")
+        return ' '.join(meaning) if meaning is not None else None
+
 
 def read_exam_hanja():
     grade_styles = {
@@ -14,11 +66,14 @@ def read_exam_hanja():
         2: 'S',
         1: 'S'
     }
+    kanji_dict = KanjiDict()
     with open(os.path.join('..', 'lists', 'exam_hanja_list.txt'), encoding='utf8') as f:
         for line in f.readlines()[1:]:
             hanja, readings, meanings, grade = line.split('\t')
             readings = readings.replace(':', '').replace('-', '')
-            yield hanja, readings, meanings, grade_styles[int(grade)]
+            eng_meaning = kanji_dict.get_meaning(hanja)
+            meanings = meanings + '; ' + eng_meaning if eng_meaning else meanings
+            yield hanja, readings, meanings, int(grade), grade_styles[int(grade)]
 
 
 def str_to_list(hanja_str):
