@@ -2,8 +2,10 @@
 import jinja2
 import os
 
+
 def is_hiragana(sym):
     return 0x3040 <= ord(sym) <= 0x309f
+
 
 class KanjiDict:
     def __init__(self):
@@ -76,6 +78,30 @@ def read_exam_hanja():
             yield hanja, readings, meanings, int(grade), grade_styles[int(grade)]
 
 
+def read_exam_hanja_yarxi():
+    grade_styles = {
+        8: 1,
+        7: 2,
+        6: 3,
+        5: 4,
+        4: 5,
+        3: 6,
+        2: 'S',
+        1: 'S'
+    }
+    hanja_grade = {}
+    with open(os.path.join('..', 'lists', 'exam_hanja_list.txt'), encoding='utf8') as f:
+        for line in f.readlines()[1:]:
+            hanja, readings, meanings, grade = line.split('\t')
+            hanja_grade[hanja] = grade
+
+    grade = hanja_grade[hanja]
+    with open(os.path.join('..', 'lists', 'hanja_yarxi_list.txt'), encoding='utf8') as f:
+        for line in f.readlines():
+            hanja, readings, base_meaning, meanings = line.split('\t')
+            yield hanja, readings, base_meaning, meanings, int(grade), grade_styles[int(grade)]
+
+
 def str_to_list(hanja_str):
     if len(hanja_str.strip()) == 0:
         return []
@@ -107,6 +133,16 @@ def generate_exam_hanja(env):
     with open(os.path.join('..', 'exam_hanja.html'), mode='w', encoding='utf8') as file:
         file.write(html)
 
+
+def generate_exam_hanja_yarxi(env):
+    exam_tmpl = env.get_template('exam_hanja_yarxi.template.html')
+    data = list(read_exam_hanja_yarxi())
+    # print(list(data))
+    html = exam_tmpl.render(records=data)
+    with open(os.path.join('..', 'exam_hanja_yarxi.html'), mode='w', encoding='utf8') as file:
+        file.write(html)
+
+
 glob_env = jinja2.Environment(
     loader=jinja2.PackageLoader('create_dashboard', package_path=os.path.join('..', 'template')),
     autoescape=jinja2.select_autoescape(['html', 'xml'])
@@ -114,3 +150,4 @@ glob_env = jinja2.Environment(
 
 generate_school_hanja(glob_env)
 generate_exam_hanja(glob_env)
+generate_exam_hanja_yarxi(glob_env)

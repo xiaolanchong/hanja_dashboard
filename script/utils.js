@@ -22,23 +22,23 @@ function onHanjaClick (self) {
     dataType: 'json'
   }
   ).done((data) => {
-      hanjaBoardElem.text('')
-      const table = createHanjaBoard(data)
-      hanjaBoardElem.append(table)
-    }
+    hanjaBoardElem.text('')
+    const table = createHanjaBoard(data)
+    hanjaBoardElem.append(table)
+  }
   ).fail(() => {
-      hanjaBoardElem.text('Кандзи не найден на сайте')
-    }
+    hanjaBoardElem.text('Кандзи не найден на сайте')
+  }
   )
 }
 
 function createHanjaBoard (jsonData) {
   const hanja = jsonData?.hanja ?? ''
   const words = jsonData?.words ?? []
-  const table = $(`<table class="hanja-board">` + 
-                    `<caption>Слова с ${hanja}</caption>` + 
-                    `<tr><th>Ханча</th><th>Слово</th><th>Значение</th></tr>` + 
-                  `</table>`)
+  const table = $('<table class="hanja-board">' +
+                    `<caption>Слова с ${hanja}</caption>` +
+                    '<tr><th>Ханча</th><th>Слово</th><th>Значение</th></tr>' +
+                  '</table>')
   for (const [hanjaWord, hangul, meaning] of words) {
     const coloredHanjaWord = hanjaWord.replace(new RegExp(`${hanja}`, 'g'), `<span class="hanja_hilite">${hanja}</span>`)
     const row = $(`<tr><td class="hanja">${coloredHanjaWord}</td><td class="hangul">${hangul}</td><td>${meaning}</td></tr>`)

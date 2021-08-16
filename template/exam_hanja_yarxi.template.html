@@ -1,0 +1,92 @@
+{% extends "base.template.html" %}
+
+{% block title %}
+    <title>Список экзамена на знание ханчи с определениями из Яркси</title>
+
+    <style>
+        .hidden, .hidden > *{
+            color: transparent !important;
+        }
+
+        #mode_panel {
+            position: fixed;
+            top: 0;
+            right: 0;
+            padding: 5px 5px 5px 0px;
+            background: #303030;
+            border-radius: 3px;
+        }
+    </style>
+{% endblock %}
+
+{% block scripts %}
+    <script src="script/hanja_yarxi.js"></script>
+{% endblock %}
+
+{% block body %}
+    <h1>Список экзамена на знание ханчи с определениями из Яркси</h1>
+    <div id="mode_panel" >
+        <input type="checkbox" id="showHanja" name="showHanja" checked />
+        <label for="showHanja">Ханча</label>
+        
+        <input type="checkbox" id="showPronun" name="showPronun" checked />
+        <label for="showPronun">Произношение</label>
+        
+        <input type="checkbox" id="showBaseMeaning" name="showBaseMeaning" checked />
+        <label for="showBaseMeaning">Базовое значение</label>
+
+        <input type="checkbox" id="showMeaning" name="showMeaning" checked />
+        <label for="showMeaning">Значение</label>
+    </div>
+    <div>
+        3500 иероглифов, разбитых на уровни 8-1, от простого к сложному:
+        <ol>
+            <li><a href="#level8">8급</a> (50 знаков)  - дошкольное образование и начальная школа</li>
+            <li><a href="#level7">7급</a> (150 знаков) - начальное изучение ханчи</li>
+            <li><a href="#level6">6급</a> (300 знаков) - базовое использование ханчи</li>
+            <li><a href="#level5">5급</a> (500 знаков) - начальное использования ханчи в образовании</li>
+            <li><a href="#level4">4급</a> (1000 знаков) - продвижение от начального уровня до среднего </li>
+            <li><a href="#level3">3급</a> (1817 знаков) - уровень чтения прессы и образовательной лексики</li>
+            <li><a href="#level2">2급</a> (2355 знаков) - уровень владения ханчи повседневных слов китайского происхождения</li>
+            <li><a href="#level1">1급</a> (3500 знаков) - свободное владение классическим языком</li>
+            <li>Спецуровень 2 (4650 знаков)</li>
+            <li>Спецуровень (5978 знаков)</li>
+        </ol>
+    </div>
+    <div>Начертания иероглифов даны в соответствии со стандартом Южной Кореи. Начертания на других страницах могут отличаться, см. <a href="https://en.wikipedia.org/wiki/Han_unification">унификация Хань</a>.
+    </div>
+    <table class="main_table alternative">
+        <thead>
+             <tr>
+                 <th>№</th>
+                 <th>Иероглиф</th>
+                 <th>Чтение</th>
+                 <th>Базовое значение</th>
+                 <th>Значение</th>
+             </tr>
+        </thead>
+        <tbody>
+             {%- for hanja, readings, base_meaning, meanings, grade, css_grade in records %}
+                 {%- if loop.index == 1 -%}
+                    <tr id="level{{grade}}" class="level"><td class="level" colspan="4">Уровень {{grade}}</td></tr>
+                 {%- else -%}
+                    {% set prevgrade = records[loop.index-2][-2] %}
+                    {% if prevgrade != grade %}
+                        <tr id="level{{grade}}" class="level"><td colspan="4">Уровень {{grade}}</td></tr>
+                    {% endif %}
+                 {%- endif -%}
+                 <tr>
+                     <td class="number">{{ loop.index }}</td>
+                     <td><span class="level-dark-{{css_grade}} hanja kanji_widget">{{ hanja }}</span></td>
+                     <td class="hangul reading">{{ readings }}</td>
+                     <td class="base_meaning">{{ base_meaning }}</td>
+                     <td class="meaning">{{ meanings }}
+                     </td>
+                 </tr>
+             {%- endfor -%}
+        </tbody>
+    </table>
+    <div>Источник: <a href="https://namu.wiki/w/%ED%95%9C%EC%9E%90/%EB%AA%A9%EB%A1%9D/%EA%B8%89%EC%88%98%EB%B3%84">Намувики</a>, <a href="https://www.susi.ru/yarxi/">словарь Яркси</a>
+    </div>
+
+{% endblock %}
