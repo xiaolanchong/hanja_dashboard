@@ -1,4 +1,6 @@
 # script to create a combined list of kanji, hanzi and hanja
+import re
+
 
 def get_kanji():
     with open('../../kanji_dashboard/data/joyo_quick.txt', encoding='utf8') as file:
@@ -236,21 +238,25 @@ variants = {
 
 
 def create_hanja_with_yarxi_meaning():
+    re_reading = re.compile(r' ?\(«.+?»\)')
     hanja_reading = list(get_hanja_reading())
 
     yarxi = dict((kanji, (name, meaning)) for kanji, name, meaning in get_yarxi_names())
     old_kanji = dict(get_trad_kanji())
     for hanja, reading in hanja_reading:
-        name_meaning = yarxi.get(hanja)
+        hanja_lookup = old_kanji.get(hanja, hanja)
+        name_meaning = yarxi.get(hanja_lookup)
         if name_meaning is None:
-            new_kanji = old_kanji.get(hanja)
-            name_meaning = yarxi.get(new_kanji)
-        if name_meaning is None:
-            new_kanji = variants.get(hanja)
+            new_kanji = variants.get(hanja_lookup)
             name_meaning = yarxi.get(new_kanji)
 
-        reading = reading.replace(':', '').replace('-', '')
+        hangul = reading.replace(':', '').replace('-', '')
         if name_meaning is not None:
-            print(f'{hanja}\t{reading}\t{name_meaning[0]}\t{name_meaning[1]}')
+            no_reading = re_reading.sub('', name_meaning[1])
+            print(f'{hanja}\t{hangul}\t{name_meaning[0]}\t{no_reading}')
+            #break
         else:
-            print(f'{hanja}\t{reading}\t\t')
+            print(f'{hanja}\t{hangul}\t\t')
+
+
+create_hanja_with_yarxi_meaning()
