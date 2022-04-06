@@ -17,7 +17,6 @@ class KanjiDict:
                 hiragana_start = next((i for i, sym in enumerate(onkun) if is_hiragana(sym)), None)
                 on = onkun[:hiragana_start] if hiragana_start is not None else onkun
                 on = on.strip()
-                #on.split(' ')
                 self.meanings[kanji] = (english, on)
         variants = {
             '敎': '教',
@@ -52,8 +51,6 @@ class KanjiDict:
 
     def get_meaning(self, kanji):
         meaning = self.meanings.get(kanji)
-        #if meaning is None:
-        #    print(f"'{kanji}': '', ")
         return ' '.join(meaning) if meaning is not None else None
 
 
